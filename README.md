@@ -1,5 +1,5 @@
 # eGovFramework v3.7 
-![Spring](https://img.shields.io/badge/Spring-4.0-339933?style=flat-square&logo=Spring&logoColor=white)
+![Spring](https://img.shields.io/badge/Spring_STS-4.0-339933?style=flat-square&logo=Spring&logoColor=white)
 
 ## Overview
 Spring4 based version append with spring data jpa and RESTful api
