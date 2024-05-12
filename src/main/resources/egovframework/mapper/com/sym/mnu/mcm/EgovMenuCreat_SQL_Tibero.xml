@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MenuCreat">
+
+	<typeAlias  alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+    <typeAlias  alias="menuCreatVO" type="egovframework.com.sym.mnu.mcm.service.MenuCreatVO"/>
+	<typeAlias  alias="comDefaultVO" type="egovframework.com.cmm.ComDefaultVO"/>
+	
+	<select id="menuManageDAO.selectMenuCreatManageList_D" parameterType="comDefaultVO" resultType="egovMap">
+		<![CDATA[ 
+                SELECT * 
+                FROM  
+                    (SELECT rownum rn, TB.* 
+                     FROM 
+			            (SELECT AUTHOR_CODE   AS "authorCode",
+								AUTHOR_NM     AS "authorNm",
+								AUTHOR_DC     AS "authorDc",
+								AUTHOR_CREAT_DE AS "authorCreatDe",
+							   (SELECT COUNT(B.AUTHOR_CODE)
+								FROM   COMTNMENUCREATDTLS B
+								WHERE  B.AUTHOR_CODE = A.AUTHOR_CODE ) AS "chkYeoBu"
+						FROM    COMTNAUTHORINFO A
+						WHERE   A.AUTHOR_CODE like '%'||#searchKeyword#||'%') TB
+
+                    ) 
+                WHERE rn BETWEEN #firstIndex# + 1 AND #firstIndex# + #recordCountPerPage#
+        ]]>
+	</select> 
+
+	<select id="menuManageDAO.selectMenuCreatManageTotCnt_S" parameterType="comDefaultVO" resultType="int">
+		<![CDATA[ 
+			SELECT COUNT(AUTHOR_CODE) AS "totcnt"
+			  FROM COMTNAUTHORINFO
+			 WHERE AUTHOR_CODE like '%'||#searchKeyword#||'%'
+		]]>
+	</select>
+
+	<select id="menuManageDAO.selectMenuCreatList_D" parameterType="MenuCreatVO" resultType="egovMap">
+		<![CDATA[ 
+			SELECT
+				  A.MENU_NO AS "menuNo"
+				, A.MENU_ORDR AS "menuOrdr"
+				, A.MENU_NM AS "menuNm"
+				, A.UPPER_MENU_NO AS "upperMenuId"
+			    , (SELECT count(B.MENU_NO) 
+			         FROM COMTNMENUCREATDTLS B   
+			        WHERE B.MENU_NO  = A.MENU_NO 
+			          AND B.AUTHOR_CODE = #authorCode#) AS "chkYeoBu"
+			FROM COMTNMENUINFO A
+			WHERE A.MENU_NO > 0
+			ORDER BY A.MENU_ORDR
+		 ]]>
+	</select> 
+
+	<insert id="menuManageDAO.insertMenuCreat_S">
+		<![CDATA[ 
+			INSERT INTO COMTNMENUCREATDTLS ( AUTHOR_CODE ,MENU_NO )
+			VALUES (  #authorCode#, #menuNo# )
+		]]>
+	</insert>
+
+	<select id="menuManageDAO.selectMenuCreatCnt_S" parameterType="MenuCreatVO" resultType="int">
+		<![CDATA[ 
+			SELECT COUNT(AUTHOR_CODE) AS "totcnt"
+			  FROM COMTNAUTHORINFO
+			 WHERE AUTHOR_CODE = #authorCode#
+		]]>
+	</select>
+
+	<delete id="menuManageDAO.updateMenuCreat_S">
+		<![CDATA[  
+		    UPDATE COMTNMENUCREATDTLS  
+		       SET MAPNG_CREAT_ID=#mapCreatId# 
+		     WHERE AUTHOR_CODE=#authorCode#
+		]]>                                
+	</delete> 
+
+	<delete id="menuManageDAO.deleteMenuCreat_S">
+		<![CDATA[                           
+			DELETE FROM COMTNMENUCREATDTLS              
+			 WHERE AUTHOR_CODE=#authorCode#                
+		]]>                                
+	</delete> 
+
+	<select id="menuManageDAO.selectAuthorByUsr" parameterType="comDefaultVO" resultType="MenuCreatVO">
+		<![CDATA[ 
+		select AUTHOR_CODE AS "authorCode" from COMTNEMPLYRSCRTYESTBS
+		where SCRTY_DTRMN_TRGET_ID =
+			(select ESNTL_ID from COMVNUSERMASTER
+			where user_id = #searchKeyword# )
+		]]>
+	</select>
+
+	<select id="menuManageDAO.selectUsrByPk" parameterType="comDefaultVO" resultType="int">
+		<![CDATA[ 
+		select count(AUTHOR_CODE) from COMTNEMPLYRSCRTYESTBS
+		where SCRTY_DTRMN_TRGET_ID =
+			(select ESNTL_ID from COMVNUSERMASTER
+			where user_id = #searchKeyword# )
+		]]>
+	</select>
+
+</mapper>                            

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+        <form name="knoSpecialist">
+			<field property="orgnztId" depends="required, maxlength">
+        		<arg0 key="조직명" resource="false"/>
+        		<arg1 key="20" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>20</var-value>
+				</var>
+			</field>     
+			<field property="knoTypeCd" depends="required, maxlength">
+        		<arg0 key="지식유형명" resource="false"/>
+        		<arg1 key="20" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>20</var-value>
+				</var>
+			</field>
+			<field property="speId" depends="required, maxlength">
+        		<arg0 key="전문가명" resource="false"/>
+        		<arg1 key="20" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>20</var-value>
+				</var>
+			</field>
+			<field property="appTypeCd" depends="required, maxlength">
+        		<arg0 key="등급" resource="false"/>
+        		<arg1 key="1" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>1</var-value>
+				</var>
+			</field>
+			<field property="speExpCn" depends="required, maxlength">
+        		<arg0 key="전문가설명" resource="false"/>
+        		<arg1 key="100" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>100</var-value>
+				</var>
+			</field>												
+			<field property="speConfmDe" depends="required, maxlength">
+        		<arg0 key="전문가승인일" resource="false"/>
+        		<arg1 key="10" resource="false"/>        		
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>10</var-value>
+				</var>
+			</field>		
+		</form>
+		
+    </formset>
+
+</form-validation>

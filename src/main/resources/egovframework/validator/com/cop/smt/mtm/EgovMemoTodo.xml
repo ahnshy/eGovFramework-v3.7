@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+		<form name="memoTodoVO">
+			<field property="todoNm" depends="required, maxlength">
+        		<arg0 key="할일제목" resource="false"/>
+        		<arg1 key="255" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>255</var-value>
+				</var>
+			</field>
+			
+			<field property="todoDe" depends="required">
+        		<arg0 key="할일일자" resource="false"/>
+			</field>
+			
+			<field property="todoBeginHour" depends="required">
+        		<arg0 key="할일시작(시)" resource="false"/>
+			</field>
+			<field property="todoBeginMin" depends="required">
+        		<arg0 key="할일시작(분)" resource="false"/>
+			</field>
+			
+			<field property="todoEndHour" depends="required">
+        		<arg0 key="할일종료(시)" resource="false"/>
+			</field>
+			<field property="todoEndMin" depends="required">
+        		<arg0 key="할일종료(분)" resource="false"/>
+			</field>
+			
+			<field property="wrterNm" depends="required">
+        		<arg0 key="작성자명" resource="false"/>
+			</field>
+		
+			<field property="todoCn" depends="required, maxlength">
+        		<arg0 key="할일내용" resource="false"/>
+        		<arg1 key="2500" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>2500</var-value>
+				</var>
+			</field>
+		</form>
+    </formset>
+
+</form-validation>

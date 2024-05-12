@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="menuManageDAO">
+	<select id="selectMainMenuHead" parameterType="MenuManageVO" resultType="egovMap">
+	/* selectMainMenuHead */
+		<![CDATA[ 
+            SELECT DISTINCT 
+			      B.MENU_NO           AS "menuNo"
+				, B.MENU_ORDR         AS "menuOrdr"
+				, B.MENU_NM           AS "menuNm"
+				, B.UPPER_MENU_NO     AS "upperMenuId"
+				, B.MENU_DC           AS "menuDc"
+				, B.RELATE_IMAGE_PATH AS "relateImagePath"
+				, B.RELATE_IMAGE_NM   AS "relateImageNm"
+				, B.PROGRM_FILE_NM    AS "progrmFileNm"
+				, (SELECT C.URL FROM COMTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS "chkURL"
+			FROM COMTNMENUCREATDTLS A, COMTNMENUINFO B
+			WHERE  B.Menu_NO > 0
+			AND    B.UPPER_MENU_NO = 0
+			AND    A.MENU_NO  = B.MENU_NO
+			AND    A.AUTHOR_CODE = (SELECT C.AUTHOR_CODE from COMTNEMPLYRSCRTYESTBS C
+	                                WHERE  C.SCRTY_DTRMN_TRGET_ID = #{tmpUniqId})
+			ORDER BY MENU_ORDR
+		]]>
+	</select>
+
+	<select id="selectMainMenuLeft" parameterType="MenuManageVO" resultType="egovMap">
+	/* selectMainMenuLeft */
+		<![CDATA[ 
+			SELECT
+			       B.MENU_NO           AS "menuNo"
+				 , B.MENU_ORDR         AS "menuOrdr"
+				 , B.MENU_NM           AS "menuNm"
+				 , B.UPPER_MENU_NO     AS "upperMenuId"
+				 , B.RELATE_IMAGE_PATH AS "relateImagePath"
+				 , B.RELATE_IMAGE_NM   AS "relateImageNm"
+				 , (SELECT C.URL FROM COMTNPROGRMLIST C WHERE B.PROGRM_FILE_NM = C.PROGRM_FILE_NM) AS "chkURL"
+			FROM   COMTNMENUCREATDTLS A, COMTNMENUINFO B
+			WHERE  A.MENU_NO  = B.MENU_NO
+			AND    A.AUTHOR_CODE = (SELECT AUTHOR_CODE from COMTNEMPLYRSCRTYESTBS
+	                                WHERE  SCRTY_DTRMN_TRGET_ID = #{tmpUniqId})
+		]]>
+			<if test="tempInt != null">
+			AND B.UPPER_MENU_NO = #{tempInt}
+			</if>
+			ORDER BY B.MENU_ORDR
+
+	</select>
+
+	<select id="selectLastMenuURL" parameterType="MenuManageVO" resultType="String">
+	/* selectLastMenuURL */
+		<![CDATA[ 
+			SELECT URL
+			FROM   COMTNPROGRMLIST
+			WHERE  PROGRM_FILE_NM =
+			       (SELECT PROGRM_FILE_NM FROM COMTNMENUINFO
+				    WHERE MENU_NO = #{menuNo})
+		]]>
+	</select>
+
+	<select id="selectLastMenuNo" parameterType="MenuManageVO" resultType="int">
+	/* selectLastMenuNo */
+		<![CDATA[ 
+			select MIN(MENU_NO)
+			from   COMTNMENUINFO
+			where  UPPER_MENU_NO = #{menuNo}
+			and    MENU_ORDR =
+			      (select MIN(MENU_ORDR)
+			       from COMTNMENUCREATDTLS A, COMTNMENUINFO B
+			       where A.MENU_NO = B.MENU_NO
+			       AND   A.AUTHOR_CODE = (SELECT AUTHOR_CODE from COMTNEMPLYRSCRTYESTBS
+	                                      WHERE  SCRTY_DTRMN_TRGET_ID = #{tempValue})
+			       AND   B.UPPER_MENU_NO = #{menuNo})
+		]]>
+	</select>
+
+	<select id="selectLastMenuNoCnt" parameterType="MenuManageVO" resultType="int">
+	/* selectLastMenuNoCnt */
+		<![CDATA[ 
+			select count(MENU_NO)
+			from   COMTNMENUINFO
+			where  UPPER_MENU_NO = #{menuNo}
+			and    MENU_ORDR =
+			      (select MIN(MENU_ORDR)
+			       from COMTNMENUCREATDTLS A, COMTNMENUINFO B
+			       where A.MENU_NO = B.MENU_NO
+			       AND   A.AUTHOR_CODE = (SELECT AUTHOR_CODE from COMTNEMPLYRSCRTYESTBS
+	                                      WHERE  SCRTY_DTRMN_TRGET_ID = #{tempValue})
+			       AND   B.UPPER_MENU_NO = #{menuNo})
+		]]>
+	</select>
+	
+	<select id="selectListMenu" parameterType="int" resultType="MenuVO">
+	/* selectListMenu */
+		<![CDATA[ 
+		WITH COMTNMENUINFO_CTE 
+		     AS (SELECT 
+						CHILD.MENU_NO, 
+						CHILD.PROGRM_FILE_NM, 
+						CHILD.MENU_ORDR, 
+						CHILD.MENU_DC, 
+						CHILD.MENU_DC_EN, 
+		                CAST(CHILD.MENU_NM AS VARCHAR(100)) MENU_NM, 
+						CHILD.MENU_NM AS MENU_NM2,
+						CHILD.MENU_NM_EN,
+		                CHILD.UPPER_MENU_NO, 
+		                CAST('>> ' AS VARCHAR(100))         INDENT, 
+		                1                                   LV, 
+		                Cast(RIGHT('00000' + CONVERT(VARCHAR(5), CHILD.MENU_ORDR), 5) + ':' 
+                     		+ RIGHT('0000' + CONVERT(VARCHAR(10), CHILD.MENU_NO), 10) AS VARCHAR(1000)) AS MENU_PATH 
+		         FROM   COMTNMENUINFO CHILD 
+		         WHERE  UPPER_MENU_NO = #{rootMenuNo}  
+		         UNION ALL 
+		         SELECT 
+						CHILD.MENU_NO, 
+						CHILD.PROGRM_FILE_NM, 
+						CHILD.MENU_ORDR, 
+						CHILD.MENU_DC, 
+						CHILD.MENU_DC_EN, 
+		                CAST(INDENT + CHILD.MENU_NM AS VARCHAR(100)) AS MENU_NM, 
+						CHILD.MENU_NM AS MENU_NM2,
+						CHILD.MENU_NM_EN,
+		                CHILD.UPPER_MENU_NO, 
+		                CAST('>> ' + INDENT AS VARCHAR(100))         AS INDENT, 
+		                LV + 1                                       AS LV, 
+		                CAST(MENU_PATH 
+		                	+ ':' + CAST(RIGHT('00000' + CONVERT(VARCHAR(5),CHILD.MENU_ORDR), 5) 
+                     		+ ':' + RIGHT('0000' + CONVERT(VARCHAR(10), CHILD.MENU_NO), 10) AS VARCHAR (1000)) 
+                     		+ ':' + CAST(RIGHT('0000'+CONVERT(VARCHAR(10), CHILD.MENU_NO), 10) AS VARCHAR(1000)) AS VARCHAR(1000)) AS MENU_PATH  
+		         FROM   COMTNMENUINFO_CTE PARENT 
+		                INNER JOIN COMTNMENUINFO CHILD 
+		                        ON CHILD.UPPER_MENU_NO = PARENT.MENU_NO) 
+		SELECT
+			MENU.MENU_NO, 
+			MENU.UPPER_MENU_NO,
+			MENU.MENU_NM2 AS MENU_NM,
+			MENU.MENU_NM_EN,
+			MENU.MENU_ORDR, 
+			MENU.MENU_DC, 	
+			MENU.PROGRM_FILE_NM, 	
+			MENU.LV,
+			MENU.MENU_PATH,
+			PGM.URL
+		FROM   COMTNMENUINFO_CTE MENU INNER JOIN COMTNPROGRMLIST PGM ON MENU.PROGRM_FILE_NM = PGM.PROGRM_FILE_NM
+		ORDER  BY MENU.MENU_PATH
+		]]>
+	</select>
+</mapper>

@@ -1,0 +1,17 @@
+# Add any directories, files, or patterns you don't want to be tracked by version control
+.settings
+.springBeans
+bin
+
+classes/
+/build
+target/
+
+# Eclipse artifacts, including WTP generated manifests
+# .classpath
+# .project
+spring-*/src/main/java/META-INF/MANIFEST.MF
+spring-*/src/main/java/META-INF/context.xml
+
+## Javascript
+/build/

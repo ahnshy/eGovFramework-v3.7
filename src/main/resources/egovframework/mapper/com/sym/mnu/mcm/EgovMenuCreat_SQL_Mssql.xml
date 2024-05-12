@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="menuManageDAO">
+	<select id="selectMenuCreatManageList_D" parameterType="comDefaultVO" resultType="egovMap">
+		<![CDATA[ 
+                SELECT *
+                FROM
+                    (SELECT ROW_NUMBER() OVER( ORDER BY "authorCode" ) rn, TB.*
+                     FROM
+			            (SELECT AUTHOR_CODE   AS "authorCode",
+								AUTHOR_NM     AS "authorNm",
+								AUTHOR_DC     AS "authorDc",
+								AUTHOR_CREAT_DE AS "authorCreatDe",
+							   (SELECT COUNT(B.AUTHOR_CODE)
+								FROM   COMTNMENUCREATDTLS B
+								WHERE  B.AUTHOR_CODE = A.AUTHOR_CODE ) AS "chkYeoBu"
+						FROM    COMTNAUTHORINFO A
+						WHERE   A.AUTHOR_CODE like '%'+#{searchKeyword}+'%') TB
+                    ) _TMP
+                WHERE rn BETWEEN #{firstIndex} + 1 AND #{firstIndex} + #{recordCountPerPage}
+        ]]>
+	</select>
+	
+	<select id="selectMenuHierarchyList" parameterType="MenuCreatVO" resultType="egovMap">
+	<![CDATA[ 
+		WITH CTE_MENU
+		     AS (SELECT A.MENU_NO,
+		                A.MENU_NM,
+		                A.UPPER_MENU_NO,
+		                A.MENU_ORDR,
+		                1                                                                                                 AS LEVEL,
+		                CONVERT(VARCHAR(255), 1)                                                                          AS SORT,
+		                CONVERT(VARCHAR(255), CONVERT(VARCHAR(255), A.UPPER_MENU_NO)
+		                                      + ' > ' + CAST(RIGHT('00000'+CONVERT(VARCHAR(5), A.MENU_ORDR), 5) AS VARCHAR(255))) AS FULL_PATH
+		         FROM   COMTNMENUINFO A
+		         WHERE  MENU_NO IN ( 100000, 107000, 300000 )
+		         UNION ALL
+		         SELECT A.MENU_NO,
+		                A.MENU_NM,
+		                A.UPPER_MENU_NO,
+		                A.MENU_ORDR,
+		                B.LEVEL + 1                                                                                       AS LEVEL,
+		                CONVERT(VARCHAR(255), CONVERT(VARCHAR(255), B.SORT) + ' > '
+		                                      + CONVERT(VARCHAR(255), B.LEVEL+1))                                         AS SORT,
+		                CONVERT(VARCHAR(255), CONVERT(VARCHAR(255), B.FULL_PATH) + ' > '
+		                                      + CONVERT(VARCHAR(255), A.UPPER_MENU_NO)
+		                                      + ' > ' + CAST(RIGHT('00000'+CONVERT(VARCHAR(5), A.MENU_ORDR), 5) AS VARCHAR(255))) AS FULL_PATH
+		         FROM   COMTNMENUINFO A
+		                JOIN CTE_MENU B
+		                  ON A.UPPER_MENU_NO = B.MENU_NO)
+		SELECT UPPER_MENU_NO,
+		       MENU_NO,
+		       MENU_NM,
+		       MENU_ORDR,
+		       LEVEL,
+		       REPLICATE('──', LEVEL) + ' ' + MENU_NM        AS INDENT_MENU,
+		       FULL_PATH                                     AS FULL_PATH,
+		       (SELECT CASE
+		                 WHEN COUNT(B.MENU_NO) > 0 THEN 'Y'
+		                 ELSE 'N'
+		               END
+		        FROM   COMTNMENUCREATDTLS B
+		        WHERE  B.MENU_NO = A.MENU_NO
+		               AND B.AUTHOR_CODE = #{authorCode}) AS APPLY_YN
+		FROM   CTE_MENU A
+		ORDER  BY FULL_PATH,
+		          SORT,
+		          MENU_ORDR,
+		          MENU_NM 
+ 
+	]]>
+	</select>
+
+	<select id="selectMenuCreatManageTotCnt_S" parameterType="comDefaultVO" resultType="int">
+		<![CDATA[ 
+			SELECT COUNT(AUTHOR_CODE) AS "totcnt"
+			  FROM COMTNAUTHORINFO
+			 WHERE AUTHOR_CODE like '%'+#{searchKeyword}+'%'
+		]]>
+	</select>
+
+	<select id="selectMenuCreatList_D" parameterType="MenuCreatVO" resultType="egovMap">
+		<![CDATA[ 
+			SELECT
+				  A.MENU_NO AS "menuNo"
+				, A.MENU_ORDR AS "menuOrdr"
+				, A.MENU_NM AS "menuNm"
+				, A.UPPER_MENU_NO AS "upperMenuId"
+			    , (SELECT count(B.MENU_NO)
+			         FROM COMTNMENUCREATDTLS B
+			        WHERE B.MENU_NO  = A.MENU_NO
+			          AND B.AUTHOR_CODE = #{authorCode}) AS "chkYeoBu"
+			FROM COMTNMENUINFO A
+			WHERE A.MENU_NO > 0
+			ORDER BY A.MENU_ORDR
+		 ]]>
+	</select>
+
+	<insert id="insertMenuCreat_S">
+		<![CDATA[ 
+			INSERT INTO COMTNMENUCREATDTLS ( AUTHOR_CODE ,MENU_NO )
+			VALUES (  #{authorCode}, #{menuNo} )
+		]]>
+	</insert>
+
+	<select id="selectMenuCreatCnt_S" parameterType="MenuCreatVO" resultType="int">
+		<![CDATA[ 
+			SELECT COUNT(AUTHOR_CODE) AS "totcnt"
+			  FROM COMTNAUTHORINFO
+			 WHERE AUTHOR_CODE = #{authorCode}
+		]]>
+	</select>
+
+	<delete id="updateMenuCreat_S">
+		<![CDATA[ 
+		    UPDATE COMTNMENUCREATDTLS
+		       SET MAPNG_CREAT_ID=#{mapCreatId}
+		     WHERE AUTHOR_CODE=#{authorCode}
+		]]>
+	</delete>
+
+	<delete id="deleteMenuCreat_S">
+		<![CDATA[ 
+			DELETE FROM COMTNMENUCREATDTLS
+			 WHERE AUTHOR_CODE=#{authorCode}
+		]]>
+	</delete>
+
+	<select id="selectAuthorByUsr" parameterType="comDefaultVO" resultType="MenuCreatVO">
+		<![CDATA[ 
+		select AUTHOR_CODE AS "authorCode" from COMTNEMPLYRSCRTYESTBS
+		where SCRTY_DTRMN_TRGET_ID =
+			(select ESNTL_ID from COMVNUSERMASTER
+			where user_id = #{searchKeyword} )
+		]]>
+	</select>
+
+	<select id="selectUsrByPk" parameterType="comDefaultVO" resultType="int">
+		<![CDATA[ 
+		select count(AUTHOR_CODE) from COMTNEMPLYRSCRTYESTBS
+		where SCRTY_DTRMN_TRGET_ID =
+			(select ESNTL_ID from COMVNUSERMASTER
+			where user_id = #{searchKeyword} )
+		]]>
+	</select>
+
+</mapper>

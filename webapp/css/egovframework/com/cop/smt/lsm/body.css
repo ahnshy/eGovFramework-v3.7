@@ -1,0 +1,43 @@
+/*
+  Css Name : body.css
+  Description : 공통 CSS
+  Modification Information
+ 
+      수정일         		수정자                   수정내용
+  -------    --------    ---------------------------
+ 2010.07.01    장철호          최초 생성
+ 
+    author   : 공통컴포넌트 개발팀 장철호
+    since    : 2010.07.01
+*/
+
+body { 
+		/*scrollbar-face-color: #F6F6F6; 
+		scrollbar-highlight-color: #bbbbbb; 
+		scrollbar-3dlight-color: #FFFFFF; 
+		scrollbar-shadow-color: #bbbbbb; 
+		scrollbar-darkshadow-color: #FFFFFF; 
+		scrollbar-track-color: #FFFFFF; 
+		scrollbar-arrow-color: #bbbbbb;
+		*/
+		margin-left:0px; margin-right:0px; margin-top:0px; margin-bottom:0px;
+		}
+		
+		td {font-family: "돋움"; font-size: 9pt; color:#595959;}
+		th {font-family: "돋움"; font-size: 9pt; color:#000000;}
+		select {font-family: "돋움"; font-size: 9pt; color:#595959;}
+		
+		
+		.divDotText {
+		overflow:hidden; 
+		/*text-overflow:ellipsis;*/
+		}
+		
+A:link { font-size:9pt; font-family:"돋움";color:#000000; text-decoration:none; }
+A:visited { font-size:9pt; font-family:"돋움";color:#000000; text-decoration:none; }
+A:active { font-size:9pt; font-family:"돋움";color:red; text-decoration:none; }
+A:hover { font-size:9pt; font-family:"돋움";color:red;text-decoration:none;}
+
+
+h1 {font-size:12px;}
+caption {visibility:hidden; font-size:0; height:0; margin:0; padding:0; line-height:0;}

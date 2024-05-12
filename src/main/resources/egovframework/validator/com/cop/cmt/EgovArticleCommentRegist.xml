@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+		<form name="articleComment">
+<!-- 			<field property="wrterNm" depends="required, maxlength"> -->
+<!--         		<arg0 key="cop.comment.wrterNm" /> -->
+<!--         		<arg1 key="20" resource="false"/> -->
+<!-- 				<var> -->
+<!-- 					<var-name>maxlength</var-name> -->
+<!-- 					<var-value>20</var-value> -->
+<!-- 				</var> -->
+<!-- 			</field>			 -->
+			<field property="commentCn" depends="required, maxlength">
+        		<arg0 key="comCopCmt.articleCommentVO.commentCn" />
+        		<arg1 key="200" resource="false"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>200</var-value>
+				</var>
+			</field>
+<!-- 			<field property="commentPassword" depends="required"> -->
+<!--         		<arg0 key="cop.comment.commentPassword" /> -->
+<!-- 			</field> -->
+		</form>
+    </formset>
+</form-validation>

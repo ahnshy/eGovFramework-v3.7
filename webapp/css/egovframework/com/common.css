@@ -1,0 +1,59 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* 공통선언 ▼*/
+body {
+	margin:0px 0px 0px 50px;
+	padding:0px;
+	background-color:#fff;
+	font-family:돋움, 굴림, Arial, AppleGothic, sans-serif;
+	font-size:12px;
+	color:#000000;
+	line-height:1.4em;
+}
+th, td, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, p, blockquote, iframe { margin:0;	padding:0; }
+ol, ul, li { list-style:none; padding:0; margin:0; }
+hr, h1, h2, h3, h4 { display: none; }
+img { border:none; vertical-align:top; }
+fieldset { border:none;}
+legend { display:none; margin:0; padding:0;}
+form {padding: 0px 0px;}
+
+
+
+
+/* 공통선언 ▲*/
+
+/* 상단 ▼*/
+#new_wrap {width:981px; min-height:500px;}
+#gnb {width:981px; height:65px;}
+#gnb #top_logo {width:236px; height:65px; float:left;}
+#gnb #use_descri { height:22px; float:right; margin:22px 0 0 0; font-size:12px; color:#4f4f4f; font-weight:bold; letter-spacing:-1px; background:url(../../../images/egovframework/com/yellow_bull.gif) no-repeat; padding:4px 0 0 22px; }
+#gnb #use_descri li {display:inline;}
+#gnb #use_descri li img { margin:-3px 0 0px 5px;}
+/* 상단 ▲*/
+
+
+/* 상단메뉴 ▼*/
+#new_topnavi {background:url(../../../images/egovframework/com/navi_bg.gif) no-repeat; width:961px; height:33px; padding:14px 0 0 20px;}
+#new_topnavi li {display:inline; padding:12px 0 0 2px;}
+#new_topnavi li.gap {color:#a8d7f2; font-size:11px; padding:0 6px}
+#new_topnavi li a{font-size:12px; color:#fff; font-weight:bold; text-decoration:none;}
+#new_topnavi li a:hover{font-weight:bold; color:#c9e2f7; text-decoration:none;}
+/* 상단메뉴 ▲*/
+
+/* 좌측메뉴 ▼*/
+#new_container #left_menu {width:210px;float:left; min-height:500px; min-height:500px; height:500px; padding:28px 0 0 0;}
+#new_container #left_menu .link{ text-decoration:none; font-weight:bold; color:#427daf }
+#new_container #contents {width:760px;float:left; padding:28px 0 0 0;}
+/* 좌측메뉴 ▲*/
+/* 하단 ▼*/
+#new_footer { background:url(../../../images/egovframework/com/bottom_bg.gif) repeat-x; width:941px; height:60px; clear:both; padding:12px 0 0 40px}
+#new_footer li.gap {padding:0 0 0 50px;}
+#new_footer li { display:inline; }
+/* 하단 ▲*/
+/* 하단_login ▼*/
+/* #new_footer_login { background:url(../../../1.gif) repeat-x; width:700px; height:60px; clear:both; padding:12px 0 0 40px} */
+#new_footer_login li.gap {padding:0 0 0 50px;}
+#new_footer_login li { display:inline; }
+/* 하단_login ▲*/

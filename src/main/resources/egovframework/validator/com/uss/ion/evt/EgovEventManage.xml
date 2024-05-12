@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+        <form name="eventManage">
+            <field property="eventSe" depends="required">
+                <arg0 key="행사구분" resource="false"/>
+            </field>
+            <field property="eventNm" depends="required, maxlength">
+                <arg0 key="행사명" resource="false"/>     
+                <arg1 key="60" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>60</var-value>
+                </var>                       
+            </field>
+            <field property="eventPurps" depends="required, maxlength">
+                <arg0 key="행사목적" resource="false"/>
+                <arg1 key="200" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>200</var-value>
+                </var>
+            </field>
+            <field property="eventBeginDe" depends="required">
+                <arg0 key="행사시작일자" resource="false"/>
+            </field>
+            <field property="eventEndDe" depends="required">
+                <arg0 key="행사종료일자" resource="false"/>
+            </field>
+            <field property="eventAuspcInsttNm" depends="required, maxlength">
+                <arg0 key="행사주최기관명" resource="false"/>
+                <arg1 key="60" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>60</var-value>
+                </var>
+            </field>
+            <field property="eventMngtInsttNm" depends="required, maxlength">
+                <arg0 key="행사주관기관명" resource="false"/>
+                <arg1 key="60" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>60</var-value>
+                </var>
+            </field>
+            <field property="eventPlace" depends="required, maxlength">
+                <arg0 key="행사장소" resource="false"/>
+                <arg1 key="200" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>30</var-value>
+                </var>
+            </field>
+            <field property="eventCn" depends="required, maxlength">
+                <arg0 key="행사내용" resource="false"/>
+                <arg1 key="1000" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>1000</var-value>
+                </var>
+            </field>
+            <field property="ctOccrrncAt" depends="required">
+                <arg0 key="비용발생여부" resource="false"/>
+            </field>
+            <field property="partcptCt" depends="required">
+                <arg0 key="참가비용" resource="false"/>
+            </field>
+            <field property="psncpa" depends="required">
+                <arg0 key="정원" resource="false"/>
+            </field>
+            <field property="rceptBeginDe" depends="required">
+                <arg0 key="접수시작일자" resource="false"/>
+            </field>
+            <field property="rceptEndDe" depends="required">
+                <arg0 key="접수종료일자" resource="false"/>
+            </field>
+
+        </form>
+    </formset>
+
+</form-validation>

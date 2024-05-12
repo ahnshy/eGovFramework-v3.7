@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+		<form name="notification">
+			<field property="ntfcSj" depends="required, maxlength">
+        		<arg0 key="uss.ion.noi.ntfcSj" />
+        		<arg1 key="30" resource="false"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>30</var-value>
+				</var>
+			</field>			
+			<field property="ntfcCn" depends="required, maxlength">
+        		<arg0 key="uss.ion.noi.ntfcCn" />
+        		<arg1 key="50" resource="false"/>
+				<var>
+					<var-name>maxlength</var-name>
+					<var-value>50</var-value>
+				</var>
+			</field>
+			<field property="ntfcDate" depends="required">
+        		<arg0 key="uss.ion.noi.ntfcDate" />
+			</field>
+			<field property="ntfcHH" depends="required">
+        		<arg0 key="uss.ion.noi.ntfcHH" />
+			</field>
+			<field property="ntfcMM" depends="required">
+        		<arg0 key="uss.ion.noi.ntfcMM" />
+			</field>
+			<field property="bhNtfcIntrvl" depends="required">
+        		<arg0 key="uss.ion.noi.bhNtfcIntrvl" />
+			</field>
+		</form>
+    </formset>
+</form-validation>

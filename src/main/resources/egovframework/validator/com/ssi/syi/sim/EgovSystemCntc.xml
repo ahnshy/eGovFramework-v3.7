@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+
+        <form name="systemCntc">
+			<field property="cntcNm" depends="required, maxlength">
+        		<arg0 key="연계명" resource="false"/>
+        		<arg1 key="60" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>60</var-value>
+				</var>
+			</field> 
+			<field property="cntcType" depends="required, maxlength">
+        		<arg0 key="연계유형" resource="false"/>
+        		<arg1 key="60" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>60</var-value>
+				</var>
+			</field> 
+			<field property="provdInsttId" depends="required">
+        		<arg0 key="제공기관" resource="false"/>
+			</field> 
+			<field property="provdSysId" depends="required">
+        		<arg0 key="제공시스템" resource="false"/>
+			</field> 
+			<field property="provdSvcId" depends="required">
+        		<arg0 key="제공서비스" resource="false"/>
+			</field> 
+			<field property="requstInsttId" depends="required">
+        		<arg0 key="요청기관" resource="false"/>
+			</field> 
+			<field property="requstSysId" depends="required">
+        		<arg0 key="요청시스템" resource="false"/>
+			</field> 
+			<field property="validBeginDe" depends="required, date">
+        		<arg0 key="유효시작일자" resource="false"/>
+				<var>
+				<var-name>datePatternStrict</var-name>
+				<var-value>yyyyMMdd</var-value> 
+				</var>
+			</field> 
+			<field property="useAt" depends="required">
+        		<arg0 key="사용여부" resource="false"/>
+			</field> 
+		</form>
+    </formset>
+
+</form-validation>

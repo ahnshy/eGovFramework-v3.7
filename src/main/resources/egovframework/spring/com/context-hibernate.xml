@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	
+	<!-- 컨테이너가 관리하는 EntityManager 생성, @PersistenceContext와 함께 사용 -->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="egov.dataSource" />
+		<!-- 어노테이션 매핑정보 스캔 -->
+		<property name="packagesToScan" value="com" />
+		<!-- 구현체별 자체 기능을 표준화 -->
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="showSql" value="true" />
+				<property name="generateDdl" value="true" />
+			</bean>
+		</property>
+		<!-- persistence.xml 설정정보와 함께 사용가능 -->
+		<property name="jpaProperties">
+			<props>
+				<!-- <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.EJB3NamingStrategy</prop> -->
+				<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+				<!-- hibernate 5 버전에서의 세팅 (4 버전은 위에껄 사용)-
+				<prop key="hibernate.naming.implicit-strategy">org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl</prop>
+				<prop key="hibernate.naming.physical-strategy">org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl</prop> 
+				-->
+				<prop key="hibernate.hbm2ddl.auto">validate</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>                
+				<prop key="hibernate.format_sql">true</prop>                
+				<prop key="hibernate.use_sql_comments">true</prop>         
+				<prop key="hibernate.jdbc.batch_size">5</prop>
+			</props>
+		</property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+		<form name="meetingManageVO">
+			<field property="mtgNm" depends="required, maxlength">
+        		<arg0 key="회의제목" resource="false"/>
+        		<arg1 key="250" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>250</var-value>
+				</var>
+			</field>
+			
+			<field property="mtgMtrCn" depends="required, maxlength">
+        		<arg0 key="회의 안건 내용" resource="false"/>
+        		<arg1 key="1000" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>1000</var-value>
+				</var>
+			</field> 
+			
+			<field property="mtgSn" depends="required, maxlength, integer">
+        		<arg0 key="회의순서" resource="false"/>
+        		<arg1 key="10" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>10</var-value>
+				</var>
+			</field> 
+			
+			<field property="mtgCo" depends="required, maxlength, integer">
+        		<arg0 key="회의회차" resource="false"/>
+        		<arg1 key="5" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>5</var-value>
+				</var>
+			</field>
+			 
+      		<field property="mtgDe" depends="required, date">
+        		<arg0 key="회의일자" resource="false"/>
+				<var>
+				<var-name>datePatternStrict</var-name>
+				<var-value>yyyy-MM-dd</var-value> 
+				</var>
+			</field>
+			
+			<field property="mtgPlace" depends="required, maxlength">
+        		<arg0 key="회의장소" resource="false"/>
+        		<arg1 key="250" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>250</var-value>
+				</var>
+			</field> 
+			<field property="mtgBeginHH" depends="required">
+        		<arg0 key="회의시작시간(시간)" resource="false"/>
+			</field>
+			<field property="mtgBeginMM" depends="required">
+        		<arg0 key="회의시작시간(분)" resource="false"/>
+			</field>
+			<field property="mtgEndHH" depends="required">
+        		<arg0 key="회의종료시간(시간)" resource="false"/>
+			</field>
+			<field property="mtgEndMM" depends="required">
+        		<arg0 key="회의종료시간(분)" resource="false"/>
+			</field>
+      		<field property="readngBeginDe" depends="required, date">
+        		<arg0 key="열람 개시일" resource="false"/>
+				<var>
+				<var-name>datePatternStrict</var-name>
+				<var-value>yyyy-MM-dd</var-value> 
+				</var>
+			</field>
+			
+			<field property="mtgResultCn" depends="maxlength">
+        		<arg0 key="회의결과 내용" resource="false"/>
+        		<arg1 key="1000" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>1000</var-value>
+				</var>
+			</field> 
+			<field property="etcMatter" depends="maxlength">
+        		<arg0 key="기타 사항" resource="false"/>
+        		<arg1 key="1000" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>1000</var-value>
+				</var>
+			</field> 
+			
+			<field property="nonatdrnCo" depends="integer">
+        		<arg0 key="불참석자수" resource="false"/>
+			</field>
+			<field property="atdrnCo" depends="integer">
+        		<arg0 key="참석자수" resource="false"/>
+			</field>
+		</form>
+    </formset>
+
+</form-validation>

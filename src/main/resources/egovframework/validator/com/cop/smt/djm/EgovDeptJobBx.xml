@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+		<form name="deptJobBxVO">
+			<field property="deptNm" depends="required">
+        		<arg0 key="부서" resource="false"/>
+			</field>
+			
+			<field property="deptJobBxNm" depends="required, maxlength">
+        		<arg0 key="부서업무함명" resource="false"/>
+        		<arg1 key="255" resource="false"/>
+				<var>
+				<var-name>maxlength</var-name>
+				<var-value>255</var-value>
+				</var>
+			</field>
+			
+			<field property="indictOrdr" depends="required, integer">
+        		<arg0 key="표시순서" resource="false"/>
+			</field>
+			
+		</form>
+    </formset>
+
+</form-validation>

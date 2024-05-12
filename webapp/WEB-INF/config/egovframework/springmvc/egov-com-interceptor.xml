@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	<!-- 세션(Session) 방식 인증시에만 AuthenticInterceptor 동작  -->
+    <beans profile="session">  
+	    <mvc:interceptors>
+	        <bean class="egovframework.com.cmm.interceptor.IpObtainInterceptor" />        
+	        <!-- IP 정보 기록 및 로그인 체크가 필요한 URL과 로그인 여부를 체크해줄 인터셉터를 등록한다. -->
+	        <mvc:interceptor>
+	            <mvc:mapping path="/**/*.do" />
+	            <mvc:exclude-mapping path="/uat/uia/**" />
+	            <mvc:exclude-mapping path="/index.do" />
+	            <mvc:exclude-mapping path="/EgovLeft.do" />
+	            <mvc:exclude-mapping path="/EgovContent.do" />
+	            <mvc:exclude-mapping path="/EgovTop.do" />
+	            <mvc:exclude-mapping path="/EgovBottom.do" />
+	            <mvc:exclude-mapping path="/uat/uia/egovLoginUsr.do" />
+	            <mvc:exclude-mapping path="/uat/uia/actionLogin.do" />
+	            <bean class="egovframework.com.cmm.interceptor.AuthenticInterceptor">
+	           	<!-- 관리자 권한 Ant style Pattern List -->
+				<property name="adminAuthPatternList">
+				<list>
+					<!-- 보안 > 권한관리 -->
+					<value>/sec/ram/*.do</value>
+				</list>
+				</property>
+	            </bean>
+	        </mvc:interceptor>
+	    </mvc:interceptors> 
+	</beans>
+</beans>

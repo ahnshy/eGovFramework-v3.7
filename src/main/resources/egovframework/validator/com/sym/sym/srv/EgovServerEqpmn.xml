@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+    <formset>
+        <form name="serverEqpmn">
+            <field property="serverEqpmnNm" depends="required, maxlength">
+                <arg0 key="서버장비명" resource="false"/>     
+                <arg1 key="30" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>30</var-value>
+                </var>                       
+            </field>
+            <field property="serverEqpmnIp" depends="required, maxlength">
+                <arg0 key="서버장비IP" resource="false"/>     
+                <arg1 key="23" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>23</var-value>
+                </var>                       
+            </field>
+            <field property="serverEqpmnMngrNm" depends="required, maxlength">
+                <arg0 key="관리자" resource="false"/>     
+                <arg1 key="30" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>30</var-value>
+                </var>                       
+            </field>
+            <field property="mngrEmailAddr" depends="required, maxlength, email">
+                <arg0 key="관리자이메일주소" resource="false"/>     
+                <arg1 key="50" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>50</var-value>
+                </var>                       
+            </field>            
+            <field property="opersysmInfo" depends="required, maxlength">
+                <arg0 key="OS정보" resource="false"/>     
+                <arg1 key="30" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>1000</var-value>
+                </var>                       
+            </field>
+            <field property="cpuInfo" depends="required, maxlength">
+                <arg0 key="CPU정보" resource="false"/>     
+                <arg1 key="30" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>1000</var-value>
+                </var>                       
+            </field>
+            <field property="moryInfo" depends="required, maxlength">
+                <arg0 key="메모리정보" resource="false"/>     
+                <arg1 key="30" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>1000</var-value>
+                </var>                       
+            </field>
+            <field property="hdDisk" depends="required, maxlength">
+                <arg0 key="하드디스크" resource="false"/>     
+                <arg1 key="30" resource="false"/>
+                <var>
+                <var-name>maxlength</var-name>
+                <var-value>1000</var-value>
+                </var>                       
+            </field>            
+            <field property="regstYmd" depends="required">
+                <arg0 key="등록일자" resource="false"/>
+            </field>             
+        </form>
+    </formset>
+
+</form-validation>
